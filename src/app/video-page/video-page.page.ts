@@ -53,7 +53,9 @@ export class VideoPagePage implements OnInit {
       });
     this.player = videojs('player');
 
-    this.player.src('https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8');
+    this.player.src(
+      'hhttps://test-streams.mux.dev/x36xhzz/url_6/193039199_mp4_h264_aac_hq_7.m3u8'
+    );
     this.player.on('play', () => {
       alert('ok');
     });
