@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>video-page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="write">
+    <p>Videojs Player</p>
+    <video
+      id="player"
+      class="video-js vjs-styles-defaults js-default-skin"
+      controls
+      muted
+      width="360px"
+      height="230px"
+      data-setup="{}"
+    ></video>
+  </div>
+  HJ4jWpnJzehUu95mKns3s0JI8whXWUDT
+  <div
+    style="
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    "
+  ></div>
+  <br /><br />
+  <button (click)="showMeUniqueID()" style="width: 100%; height: 3rem">
+    Change
+  </button>
+</ion-content>

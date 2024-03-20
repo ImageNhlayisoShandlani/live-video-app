@@ -1,0 +1,7 @@
+{
+  "name": "video_live_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
