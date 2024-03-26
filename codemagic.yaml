@@ -10,6 +10,9 @@ workflows:
         script: |
           npm install
           npm run build
+      - name: Grant Execute Permissions to Gradle Wrapper
+        script: |
+          chmod +x android/gradlew
       - name: Build Android APK
         script: |
           ionic capacitor add android
