@@ -1,0 +1,38 @@
+workflows:
+  android:
+    name: Android Build
+    environment:
+      vars:
+        ANDROID_SDK_ROOT: $HOME/Android/sdk
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    scripts:
+      - name: Install Dependencies
+        script: |
+          npm install
+          npm run build
+      - name: Build Android APK
+        script: |
+          ionic capacitor add android
+          ionic capacitor copy android
+          ionic build --prod --release
+          npx cap sync android
+          cd android && ./gradlew assembleRelease
+
+  ios:
+    name: iOS Build
+    environment:
+      vars:
+        XCODE_WORKSPACE: YourProject.xcworkspace
+    scripts:
+      - name: Install Dependencies
+        script: |
+          npm install
+          npm run build
+      - name: Build iOS IPA
+        script: |
+          ionic capacitor add ios
+          ionic capacitor copy ios
+          ionic build --prod
+          npx cap sync ios
+          xcodebuild -workspace $XCODE_WORKSPACE -scheme YourScheme -configuration Release -archivePath build/YourApp.xcarchive archive
+          xcodebuild -exportArchive -archivePath build/YourApp.xcarchive -exportOptionsPlist exportOptions.plist -exportPath build
