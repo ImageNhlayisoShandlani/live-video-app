@@ -19,7 +19,6 @@ workflows:
         script: |
           ionic build
           npx cap build android
-      - name: Archive artifacts
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
 
