@@ -11,6 +11,10 @@ workflows:
           npm install
           npm install -g @ionic/cli
           npm install -g @capacitor/cli
+
+      - name: Add Platform
+        script: |
+        npx cap add android
       - name: Build Android
         script: |
           ionic build
