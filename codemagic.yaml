@@ -13,8 +13,9 @@ workflows:
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
       - name: Build App
-        ionic build
-        ionic cap add android
+        script: |
+          ionic build
+          ionic cap add android
       - name: Update dependencies and copy web assets to native project
         script: |
           npx cap sync
