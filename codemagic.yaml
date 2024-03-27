@@ -14,7 +14,7 @@ workflows:
 
       - name: Add Platform
         script: |
-        npx cap add android
+          npx cap add android
       - name: Build Android
         script: |
           ionic build
