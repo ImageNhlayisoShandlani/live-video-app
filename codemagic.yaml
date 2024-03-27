@@ -41,6 +41,7 @@ workflows:
       - name: Build iOS
         script: |
           ionic build
+          npx cap add ios
           npx cap sync ios
       - name: Archive artifacts
         script: |
