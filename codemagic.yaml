@@ -1,52 +1,23 @@
 workflows:
-  android-capacitor-workflow:
-    name: Android Build Workflow
-    max_build_duration: 120
-    instance_type: mac_mini_m1
-    scripts:
-      - name: Install npm dependencies for Ionic Capacitor project
-        script: |
-          npm install
-      - name: Set up local.properties
-        script: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
-      - name: Build App
-        script: |
-          ionic build
-          ionic cap add android
-      - name: Update dependencies and copy web assets to native project
-        script: |
-          npx cap sync
-      - name: Build Android debug
-        script: |
-          cd android
-          ./gradlew assembleDebug
-    artifacts:
-      - android/app/build/outputs/**/*.apk
-  ios-capacitor-workflow:
+  android:
+    name: Android Build (Debug)
+    max_build_duration: 60
     environment:
       vars:
-        XCODE_WORKSPACE: "platforms/ios/YOUR_APP.xcworkspace"
-        XCODE_SCHEME: "YOUR_SCHEME"
+        FLAVOR: "debug"
     scripts:
-      - name: Install npm dependencies for Ionic Capacitor project
-          script: | 
-            npm install
-      - name: Cocoapods installation
-          script: | 
-            cd ios/App && pod install
-      - name: Update dependencies and copy web assets to native project
-        script: 
-          npx cap sync
-      - name: Set up code signing settings on Xcode project
-        script: | 
-          xcode-project use-profiles
-      - name: Build ipa for distribution
-        script: | 
-          cd ios/App
-          xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
-      artifacts:
-        - build/ios/ipa/*.ipa
-        - /tmp/xcodebuild_logs/*.log
-        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - name: Install dependencies
+        script: |
+          npm install
+          npm install -g @ionic/cli
+          npm install -g @capacitor/cli
+      - name: Build Android
+        script: |
+          ionic build
+          npx cap sync android
+      - name: Archive artifacts
+        script: |
+          mkdir -p $CM_BUILD_DIR/artifacts
+          cp -r android/app/build/outputs/apk/debug/app-debug.apk $CM_BUILD_DIR/artifacts/
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
